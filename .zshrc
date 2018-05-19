@@ -1,6 +1,6 @@
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH="$PATH:$HOME/.rvm/bin"
-export ZSH=/Users/whsiao/.oh-my-zsh
+export ZSH=/Users/$(whoami)/.oh-my-zsh
 
 local version=$(echo $MY_RUBY_HOME | awk -F'-' '{print $NF}')
 
@@ -10,7 +10,7 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source  ~/powerlevel9k/powerlevel9k.zsh-theme
+# source ~/powerlevel9k/powerlevel9k.zsh-theme
 
 # Powerlevel9k
 autoload -Uz compinit
@@ -331,8 +331,47 @@ prompt_ruby_version() {
   local version_and_gemset=${RUBY_VERSION}
 
   if [[ -n "$version_and_gemset" ]]; then
-    "$1_prompt_segment" "$0" "$2" "240" "red" "$version_and_gemset" 'RUBY_ICON'
+    "$1_prompt_segment" "$0" "$2" "250" "red" "$version_and_gemset" 'RUBY_ICON'
   fi
+}
+
+prompt_formatted_swift_version() {
+  # Get the first number as this is probably the "main" version number..
+  local swift_version=$(swift --version 2>/dev/null | grep -o -E "[0-9.]+" | head -n 1)
+
+  if [[ -n "$swift_version" ]]; then
+    "$1_prompt_segment" "$0" "$2" "100" "255" "${swift_version}" 'SWIFT_ICON'
+  fi
+}
+
+prompt_formatted_ip() {
+  if [[ "$OS" == "OSX" ]]; then
+    if defined POWERLEVEL9K_IP_INTERFACE; then
+      # Get the IP address of the specified interface.
+      ip=$(ipconfig getifaddr "$POWERLEVEL9K_IP_INTERFACE")
+    else
+      local interfaces callback
+      # Get network interface names ordered by service precedence.
+      interfaces=$(networksetup -listnetworkserviceorder | grep -o "Device:\s*[a-z0-9]*" | grep -o -E '[a-z0-9]*$')
+      callback='ipconfig getifaddr $item'
+
+      ip=$(getRelevantItem "$interfaces" "$callback")
+    fi
+  else
+    if defined POWERLEVEL9K_IP_INTERFACE; then
+      # Get the IP address of the specified interface.
+      ip=$(ip -4 a show "$POWERLEVEL9K_IP_INTERFACE" | grep -o "inet\s*[0-9.]*" | grep -o "[0-9.]*")
+    else
+      local interfaces callback
+      # Get all network interface names that are up
+      interfaces=$(ip link ls up | grep -o -E ":\s+[a-z0-9]+:" | grep -v "lo" | grep -o "[a-z0-9]*")
+      callback='ip -4 a show $item | grep -o "inet\s*[0-9.]*" | grep -o "[0-9.]*"'
+
+      ip=$(getRelevantItem "$interfaces" "$callback")
+    fi
+  fi
+
+  "$1_prompt_segment" "$0" "$2" "black" "255" "$ip" 'NETWORK_ICON'
 }
 
 # =============================================================================
@@ -594,3 +633,6 @@ zplug load
 #ZLE_RPROMPT_INDENT=0
 
 # vim: ft=zsh
+# Prompt elements
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(ruby_version formatted_swift_version formatted_ip)
