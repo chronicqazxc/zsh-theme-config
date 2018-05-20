@@ -1,3 +1,4 @@
+
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH="$PATH:$HOME/.rvm/bin"
 export ZSH=/Users/$(whoami)/.oh-my-zsh
@@ -88,7 +89,7 @@ prompt_formatted_ip() {
 }
 
 # Show OS info when opening a new terminal
-# neofetch
+neofetch
 
 # Font mode for powerlevel9k
 POWERLEVEL9K_MODE="nerdfont-complete"
@@ -253,16 +254,22 @@ autosuggestionsPath=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestio
 [ ! -d $autosuggestionsPath ] &&
 git clone https://github.com/zsh-users/zsh-autosuggestions $autosuggestionsPath
 
-autoload -Uz compinit
+zshCompletions=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-completions
+[ ! -d $zshCompletions ] &&
+git clone https://github.com/zsh-users/zsh-completions $zshCompletions
 
 # Plugins to load
 plugins=(git
         virtualenv
         zsh-syntax-highlighting
         history-substring-search
-        zsh-autosuggestions)
+        zsh-autosuggestions
+        zsh-completions)
+
+autoload -Uz compinit
 
 source $ZSH/oh-my-zsh.sh
 source $syntaxHighlightingPath/zsh-syntax-highlighting.zsh
 source $historySubstringSearchPath/zsh-history-substring-search.zsh
 source $autosuggestionsPath/zsh-autosuggestions.zsh
+source $zshCompletions/zsh-completions.plugin.zsh
