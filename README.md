@@ -33,3 +33,5 @@ image_source="/path/to/img"
 
 ### Appendix
 1. https://medium.freecodecamp.org/jazz-up-your-zsh-terminal-in-seven-steps-a-visual-guide-e81a8fd59a38 
+2. https://linuxconfig.org/how-to-display-system-information-with-neofetch 
+3. https://github.com/dylanaraps/neofetch/wiki/Customizing-Info 
