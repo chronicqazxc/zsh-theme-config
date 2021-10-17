@@ -11,7 +11,7 @@ My zsh theme configs
 | Font | [Nerd Fonts](https://nerdfonts.com) |
 | [Powerlevel9k Zsh (Zsh Theme)](https://github.com/bhilburn/powerlevel9k.git) | ```$ git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k``` |
 | Zsh config | [.zshrc](https://github.com/chronicqazxc/zsh-theme-config/blob/master/.zshrc) |
-| [Optional + Arrow for iTerm2 for Mac](https://coderwall.com/p/h6yfda/use-and-to-jump-forwards-backwards-words-in-iterm-2-on-os-x) | 1. Set your left ⌥ key to act as an escape character.<br>2. Set Keyboard Shortcut ⌥←<br>Action: Send Escape Sequence<br>Esc+: b).<br>3. Set right ⌥→ key to act as an escape character.<br>4. Keyboard Shortcut: ⌥→<br>Action: Send Escape Sequence<br>Esc+: f |
+| [Optional + Arrow for iTerm2 for Mac](https://coderwall.com/p/h6yfda/use-and-to-jump-forwards-backwards-words-in-iterm-2-on-os-x) | 1. Set your left ⌥ key to act as an escape character.<br>2. Set Keyboard Shortcut ⌥←<br>Action: Send Escape Sequence<br>Esc+: `b`<br>3. Set right ⌥→ key to act as an escape character.<br>4. Keyboard Shortcut: ⌥→<br>Action: Send Escape Sequence<br>Esc+: `f` |
 
 # Neofetch
 ```shell
